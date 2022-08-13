@@ -40,7 +40,7 @@ function App() {
             <br />
             {/* image tag and canvas for inversion */}
             <div>
-                <img id='image'></img>
+                <img id='image' alt='alt tag' src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='></img>
             </div>
         </div>
     );

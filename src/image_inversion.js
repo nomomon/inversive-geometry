@@ -17,9 +17,9 @@ function set_pixels(img_element, pixels) {
 }
 
 class NewArray extends Array {
-    constructor(...args) {
-        super(...args);
-    }
+    // constructor(...args) {
+    //     super(...args);
+    // }
 
     RGBARootMeanSquare() {
         let rgba = this.reduce((rgba1, rgba2) => {
@@ -33,12 +33,12 @@ class NewArray extends Array {
                 Math.sqrt((a1 * a1 + a2 * a2))
             ];
         });
-        for (var key in rgba) {
+        for (let key in rgba) {
             if (rgba.hasOwnProperty(key)) {
                 rgba[key] /= Math.sqrt(this.length);
             }
         }
-        for (var key in rgba) {
+        for (let key in rgba) {
             if (rgba.hasOwnProperty(key)) {
                 rgba[key] = Math.round(rgba[key]);
             }
