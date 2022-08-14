@@ -46,9 +46,9 @@ class NewArray extends Array {
 }
 
 class Vector extends Array {
-    constructor(x, y) {
-        super(x, y);
-    }
+    // constructor(x, y) {
+    //     super(x, y);
+    // }
 
     get x() {
         return this[0];

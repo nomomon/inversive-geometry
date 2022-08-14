@@ -4,7 +4,26 @@ body{
     background-color: #282c34;
 }
 
+.container{
+    position: relative;
+    margin: auto;
+    width:100vw;
+}
+
 #image{
+    position: absolute;
     max-width: 95vw;
     max-height: 70vh;
+    top:0;
+    left:50%;
+    z-index: -1;
+    transform: translateX(-50%);
+}
+
+#canvas{
+    position: absolute;
+    top:0;
+    left:50%;
+    z-index: 10;
+    transform: translateX(-50%);
 }
