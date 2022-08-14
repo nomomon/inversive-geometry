@@ -17,31 +17,33 @@ function set_pixels(img_element, pixels) {
 }
 
 class NewArray extends Array {
-    // constructor(...args) {
-    //     super(...args);
-    // }
-
-    RGBARootMeanSquare() {
-        let rgba = this.reduce((rgba1, rgba2) => {
+    RGBARootMeanSquare(weights = [1, 1, 1, 1]) {
+        // take the square root of the weighted sum of the squares of the RGBA values
+        let rgba = this.reduce((rgba1, rgba2, i) => {
             const [r1, g1, b1, a1] = rgba1;
             const [r2, g2, b2, a2] = rgba2;
 
             return [
-                Math.sqrt((r1 * r1 + r2 * r2)),
-                Math.sqrt((g1 * g1 + g2 * g2)),
-                Math.sqrt((b1 * b1 + b2 * b2)),
-                Math.sqrt((a1 * a1 + a2 * a2))
+                Math.sqrt((r1 * r1 + r2 * r2 * weights[i])),
+                Math.sqrt((g1 * g1 + g2 * g2 * weights[i])),
+                Math.sqrt((b1 * b1 + b2 * b2 * weights[i])),
+                Math.sqrt((a1 * a1 + a2 * a2 * weights[i]))
             ];
-        });
+        }, [0, 0, 0, 0]);
+
+        // divide by weights sum root
         for (let key in rgba) {
-            if (rgba.hasOwnProperty(key)) {
-                rgba[key] /= Math.sqrt(this.length);
+            rgba[key] /= Math.sqrt(weights.reduce((a, b) => a + b));
             }
-        }
+
+        // round to int
         for (let key in rgba) {
-            if (rgba.hasOwnProperty(key)) {
                 rgba[key] = Math.round(rgba[key]);
             }
+
+        return Object.values(rgba);
+    }
+}
         }
 
         return Object.values(rgba);
@@ -85,7 +87,12 @@ function invert_image_array(
                     pixels.slice(c(x2_u, y2_d), c(x2_u, y2_d) + 4),
                     pixels.slice(c(x2_d, y2_u), c(x2_d, y2_u) + 4),
                     pixels.slice(c(x2_d, y2_d), c(x2_d, y2_d) + 4)
-                ).RGBARootMeanSquare();
+                ).RGBARootMeanSquare([
+                    (1 - (x2_u - x2)) * (1 - (y2_u - y2)),
+                    (1 - (x2_u - x2)) * (1 - (y2 - y2_d)),
+                    (1 - (x2 - x2_d)) * (1 - (y2_u - y2)),
+                    (1 - (x2 - x2_d)) * (1 - (y2 - y2_d))
+                ]);
 
                 for (let i = 0; i < 4; i++) {
                     new_pixels[c(x1, y1) + i] = rgba[i];
