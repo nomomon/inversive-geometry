@@ -119,8 +119,7 @@ function invert_image_array(
     w,
     h,
     R,
-    center,
-    outlineCircle = false
+    center
 ) {
     center = center || { x: w / 2, y: h / 2 };
     const center_vector = new Vector(center.x, center.y);
@@ -129,7 +128,6 @@ function invert_image_array(
     const c = (x, y) => {
         return (x + y * w) * 4;
     }
-    const new_pixels = new Uint8ClampedArray(pixels.length);
 
     for (let x1 = 0; x1 < w; x1++) {
         for (let y1 = 0; y1 < h; y1++) {
@@ -165,27 +163,20 @@ function invert_image_array(
                     new_pixels[c(x1, y1) + i] = rgba[i];
                 }
             }
-            if (d1 - R < 0.5 && d1 - R > -0.5 && outlineCircle) {
-                new_pixels[c(x1, y1)] = 255;
-                new_pixels[c(x1, y1) + 1] = 0;
-                new_pixels[c(x1, y1) + 2] = 0;
-                new_pixels[c(x1, y1) + 3] = 0;
-            }
         }
     }
 
     return new_pixels;
 }
 
-function invert_image(img_element, R, center, outlineCircle) {
+function invert_image(img_element, R, center) {
     const pixels = get_pixels(img_element);
     const new_pixels = invert_image_array(
         pixels.data,
         pixels.width,
         pixels.height,
         R,
-        center,
-        outlineCircle
+        center
     );
 
     set_pixels(img_element, new ImageData(new_pixels, pixels.width, pixels.height));
