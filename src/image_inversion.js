@@ -3,7 +3,7 @@ function get_pixels(img_element) {
     canvas.width = img_element.width;
     canvas.height = img_element.height;
     var context = canvas.getContext('2d');
-    context.drawImage(img_element, 0, 0);
+    context.drawImage(img_element, 0, 0, canvas.width, canvas.height);
     return context.getImageData(0, 0, canvas.width, canvas.height);
 }
 
@@ -34,12 +34,12 @@ class NewArray extends Array {
         // divide by weights sum root
         for (let key in rgba) {
             rgba[key] /= Math.sqrt(weights.reduce((a, b) => a + b));
-            }
+        }
 
         // round to int
         for (let key in rgba) {
-                rgba[key] = Math.round(rgba[key]);
-            }
+            rgba[key] = Math.round(rgba[key]);
+        }
 
         return Object.values(rgba);
     }
@@ -96,7 +96,7 @@ class Vector extends Array {
 
     cross(vector) {
         return this.x * vector.y - this.y * vector.x;
-        }
+    }
 
     angle(vector) {
         return Math.acos(this.dot(vector) / (this.magnitude() * vector.magnitude()));
