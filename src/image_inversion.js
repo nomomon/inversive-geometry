@@ -44,9 +44,73 @@ class NewArray extends Array {
         return Object.values(rgba);
     }
 }
+
+class Vector extends Array {
+    constructor(x, y) {
+        super(x, y);
+    }
+
+    get x() {
+        return this[0];
+    }
+
+    get y() {
+        return this[1];
+    }
+
+    set x(x) {
+        this[0] = x;
+    }
+
+    set y(y) {
+        this[1] = y;
+    }
+
+    add(vector) {
+        return new Vector(this.x + vector.x, this.y + vector.y);
+    }
+
+    subtract(vector) {
+        return new Vector(this.x - vector.x, this.y - vector.y);
+    }
+
+    multiply(scalar) {
+        return new Vector(this.x * scalar, this.y * scalar);
+    }
+
+    divide(scalar) {
+        return new Vector(this.x / scalar, this.y / scalar);
+    }
+
+    magnitude() {
+        return Math.sqrt(this.x * this.x + this.y * this.y);
+    }
+
+    normalize() {
+        return this.divide(this.magnitude());
+    }
+
+    dot(vector) {
+        return this.x * vector.x + this.y * vector.y;
+    }
+
+    cross(vector) {
+        return this.x * vector.y - this.y * vector.x;
         }
 
-        return Object.values(rgba);
+    angle(vector) {
+        return Math.acos(this.dot(vector) / (this.magnitude() * vector.magnitude()));
+    }
+
+    rotate(angle) {
+        return new Vector(
+            this.x * Math.cos(angle) - this.y * Math.sin(angle),
+            this.x * Math.sin(angle) + this.y * Math.cos(angle)
+        );
+    }
+
+    static fromPoints(point1, point2) {
+        return new Vector(point2.x - point1.x, point2.y - point1.y);
     }
 }
 
@@ -59,6 +123,9 @@ function invert_image_array(
     outlineCircle = false
 ) {
     center = center || { x: w / 2, y: h / 2 };
+    const center_vector = new Vector(center.x, center.y);
+
+    const new_pixels = new Uint8ClampedArray(pixels.length);
     const c = (x, y) => {
         return (x + y * w) * 4;
     }
@@ -66,15 +133,15 @@ function invert_image_array(
 
     for (let x1 = 0; x1 < w; x1++) {
         for (let y1 = 0; y1 < h; y1++) {
-            let x1_ = x1 - center.x,
-                y1_ = y1 - center.y;
-            let d1 = Math.sqrt(x1_ * x1_ + y1_ * y1_);
-            let k = x1_ / y1_;
-            let Q = R * R / d1;
-            let x2_ = Q / Math.sqrt(1 / (k * k) + 1) * Math.sign(x1_),
-                y2_ = Q / Math.sqrt(k * k + 1) * Math.sign(y1_);
-            let x2 = x2_ + center.x,
-                y2 = y2_ + center.y;
+            const pixel1 = new Vector(x1, y1);
+            const pixel1_vector = pixel1.subtract(center_vector);
+            const pixel2_vector = pixel1_vector
+                .normalize()
+                .multiply(R * R)
+                .divide(pixel1_vector.magnitude());
+            const pixel2 = pixel2_vector.add(center_vector);
+            let x2 = pixel2.x,
+                y2 = pixel2.y;
 
             let x2_u = Math.floor(x2),
                 x2_d = Math.ceil(x2);
