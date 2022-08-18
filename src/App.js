@@ -7,7 +7,7 @@ import './App.css';
 // google analytics
 import ReactGA from 'react-ga4';
 import useAnalyticsEventTracker from "./useAnalyticsEventTracker";
-const TRACKING_ID = "G-9NVE1LVMDY";
+const TRACKING_ID = "G-E0JLTSVL8T";
 ReactGA.initialize(TRACKING_ID);
 
 ReactGA.send("pageview");
