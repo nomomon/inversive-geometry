@@ -13,6 +13,6 @@ It works by transforming the plane (image) accoring to the following rule:
 
 ## Demo
 
-Demo is available [here](https://nomomon.github.io/inversion-geometry). Upload an image and select the center and radius of inversion.
+Demo is available [here](https://nomomon.github.io/inversive geometry). Upload an image and select the center and radius of inversion.
 
 ![demonstration](./demo.gif)
