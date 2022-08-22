@@ -1,10 +1,10 @@
-# Geometrical Inversion in React.js
+# Inversive Geometry on images in React.js
 
 _Node.js, React_
 
 ## Description
 
-This is a simple React.js app that demonstrates the [geometrical inversion](https://en.wikipedia.org/wiki/Inversive_geometry) of a point in a circle. The app is built using React and Node.js.
+This is a simple React.js app that demonstrates the [inversive geometry](https://en.wikipedia.org/wiki/Inversive_geometry) of a point in a circle. The app is built using React and Node.js.
 
 It works by transforming the plane (image) accoring to the following rule:
 
