@@ -1,18 +1,29 @@
-# Inversive Geometry on images in React.js
+# Inversive Geometry
 
-_Node.js, React_
+Interactive webapp that transforms images using geometric inversion.
 
-## Description
+## What's this about
 
-This is a simple React.js app that demonstrates the [inversive geometry](https://en.wikipedia.org/wiki/Inversive_geometry) of a point in a circle. The app is built using React and Node.js.
+Geometrical inversion maps every point P to a point P' such that OP × OP' = R², where O is the center and R is the radius of inversion. Feed it an image and watch it warp in real time.
 
-It works by transforming the plane (image) accoring to the following rule:
+Back in high school I built something like this, but it only worked through the terminal and I lost the code. So I remade it as a proper webapp with React. Along the way I came up with a neat optimization — instead of averaging mapped pixel colors with a regular mean, I used root mean square, which is [how pixel colors should actually be added](https://www.youtube.com/watch?v=LKnqECcg6Gw).
 
-> Each point $P$ is mapped to the point $P'$ on a ray $OP$, such that $OP \cdot OP' = R^2$, where $R$ is the radius of the inversion.
-> Working with pixels makes the coordinates descrete and to improve the quality of the image, the root mean squared [[1]](https://www.youtube.com/watch?v=LKnqECcg6Gw&ab_channel=minutephysics) of pixel values are taken.
+A few things you'll notice:
+- Points inside the circle get mapped outside, and vice versa
+- The image pixelates quickly near the center — multiple outer pixels collapse into one inner pixel
+- Some spots have missing pixels — those got mapped outside the image boundaries
+
+![demo](./demo.gif)
+
+## How to launch
+
+```bash
+npm install
+npm start
+```
+
+Opens on `localhost:3000`. Production build goes to `./docs`.
 
 ## Demo
 
-Demo is available [here](https://nomomon.github.io/inversive-geometry). Upload an image and select the center and radius of inversion.
-
-![demonstration](./demo.gif)
+[nomomon.github.io/inversive-geometry](https://nomomon.github.io/inversive-geometry/)
