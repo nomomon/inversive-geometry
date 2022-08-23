@@ -1,5 +1,7 @@
 # Inversive Geometry
 
+![cover](./assets/cover.jpeg)
+
 Interactive webapp that transforms images using geometric inversion.
 
 ## What's this about
