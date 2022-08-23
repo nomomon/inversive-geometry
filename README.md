@@ -13,7 +13,7 @@ A few things you'll notice:
 - The image pixelates quickly near the center — multiple outer pixels collapse into one inner pixel
 - Some spots have missing pixels — those got mapped outside the image boundaries
 
-![demo](./demo.gif)
+![demo](./assets/demo.gif)
 
 ## How to launch
 
